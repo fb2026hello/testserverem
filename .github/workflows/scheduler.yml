@@ -1,0 +1,34 @@
+name: Email Scheduler
+
+on:
+  schedule:
+    # Run every hour to check sending window and limits
+    - cron: '0 * * * *'
+  workflow_dispatch: # Allow manual triggering from GitHub UI
+
+jobs:
+  send-batch:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run Send Batch Script
+      run: npm run send-batch
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        TRACKING_DOMAIN: ${{ secrets.TRACKING_DOMAIN }}
+        ASSETS_BASE_URL: ${{ secrets.ASSETS_BASE_URL }}
+        SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+        KICKSTARTER_URL: ${{ secrets.KICKSTARTER_URL }}
