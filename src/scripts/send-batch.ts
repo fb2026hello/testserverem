@@ -6,12 +6,17 @@ import * as dotenv from 'dotenv';
 import { DateTime } from 'luxon';
 import { isWithinSendingWindow } from '../utils/timezone';
 import { generateSenderList, calculateDailySenderQuota } from '../utils/sender-logic';
+// Templates
 import SuperbackerEmailA from '../templates/SuperbackerA';
 import SuperbackerEmailB from '../templates/SuperbackerB';
 import SuperbackerEmailC from '../templates/SuperbackerC';
+import SuperbackerEmailD from '../templates/SuperbackerD';
+import SuperbackerEmailE from '../templates/SuperbackerE';
 import InstagramEmailA from '../templates/InstagramA';
 import InstagramEmailB from '../templates/InstagramB';
 import InstagramEmailC from '../templates/InstagramC';
+import InstagramEmailD from '../templates/InstagramD';
+import InstagramEmailE from '../templates/InstagramE';
 import * as cheerio from 'cheerio';
 
 dotenv.config();
@@ -130,12 +135,16 @@ async function processBatch(
 }
 
 async function sendEmail(user: any, senderEmail: string, sourceType: 'kickstarter' | 'instagram') {
-    // 1. Assign Group if missing
+    // 1. Assign Group ONLY if missing
+    // New Valid Versions:
+    // Instagram: 'C', 'D', 'E'
+    // Kickstarter: 'A', 'D', 'E'
     let version = user.user_testing_version;
+
     if (!version) {
-        const versions = ['A', 'B', 'C'];
-        version = versions[Math.floor(Math.random() * versions.length)];
-        const table = sourceType === 'instagram' ? 'leads_instagram' : 'leads_kickstarter'; // Safe interpolation
+        const validVersions = sourceType === 'instagram' ? ['C', 'D', 'E'] : ['A', 'D', 'E'];
+        version = validVersions[Math.floor(Math.random() * validVersions.length)];
+        const table = sourceType === 'instagram' ? 'leads_instagram' : 'leads_kickstarter';
         await pool.query(`UPDATE ${table} SET user_testing_version = $1 WHERE id = $2`, [version, user.id]);
     }
 
@@ -150,9 +159,15 @@ async function sendEmail(user: any, senderEmail: string, sourceType: 'kickstarte
         } else if (version === 'B') {
             emailComponent = SuperbackerEmailB({ name: user.name });
             subject = 'Open source hardware + Aerospace eng. student = Awesome 3D printer enclosure';
-        } else {
+        } else if (version === 'C') {
             emailComponent = SuperbackerEmailC({ name: user.name });
             subject = 'The 3D printer enclosure I wished someone built (Open Source & Affordable)';
+        } else if (version === 'D') {
+            emailComponent = SuperbackerEmailD({ name: user.name });
+            subject = 'Open Source hardware + 3D printer enclosure = better and safer printing'; // Content of A
+        } else if (version === 'E') {
+            emailComponent = SuperbackerEmailE({ name: user.name });
+            subject = "I don't care if you buy this."; // Content of C
         }
     } else {
         // Instagram Logic
@@ -162,10 +177,21 @@ async function sendEmail(user: any, senderEmail: string, sourceType: 'kickstarte
         } else if (version === 'B') {
             emailComponent = InstagramEmailB({ name: user.name });
             subject = 'The Ultimate 3D printer enclosure for your Prusa MK3/4 & Prusa Mini';
-        } else {
+        } else if (version === 'C') {
             emailComponent = InstagramEmailC({ name: user.name });
             subject = "I don't care if you buy this.";
+        } else if (version === 'D') {
+            emailComponent = InstagramEmailD({ name: user.name });
+            subject = 'Open Source hardware + 3D printer enclosure = better and safer printing'; // Content of A
+        } else if (version === 'E') {
+            emailComponent = InstagramEmailE({ name: user.name });
+            subject = "I don't care if you buy this."; // Content of C
         }
+    }
+
+    if (!emailComponent) {
+        console.error(`Unknown version '${version}' for user ${user.id} (${sourceType}). Skipping.`);
+        return;
     }
 
     // 3. Render & Inject Tracking

@@ -20,11 +20,11 @@ interface EmailProps {
     name?: string;
 }
 
-export const InstagramEmailC = ({ name }: EmailProps) => {
+export const SuperbackerEmailD = ({ name }: EmailProps) => {
     return (
         <Html>
             <Head />
-            <Preview>Seriously. I just want you to print safely. Here is how.</Preview>
+            <Preview>A safer way to 3D print, built by an aerospace student.</Preview>
             <Body style={main}>
                 <Container style={container}>
                     <Img
@@ -45,42 +45,44 @@ export const InstagramEmailC = ({ name }: EmailProps) => {
                     </Text>
 
                     <Text style={text}>
-                        I know you must see a lot of posts and emails like this trying show you a product, in this case a 3D printer enclosure.
-                        <br /><br />
-                        To be honest, I initially did not want to send this. I felt that it made our project look like all of these "companies" just trying to sell you something. <strong>But we're different.</strong> Everything I have ever made is open source and available on my GitHub.
+                        I'm an aerospace engineering student building an **Open Source 3D Printer Enclosure** to help the community.
                     </Text>
 
                     <Text style={text}>
-                        I have spent the last 18 months of my life working on this project as an aerospace engineering student. My goal isn't just to sell units; it is to help as many makers as possible safeguard their health when 3D printing.
+                        So, you might be asking yourself: Why am I writing to you?
+                        <br /><br />
+                        I am writing to share a solution to a problem that many makers don't consider enough until it's too late: Air Quality.
                     </Text>
 
                     <Section style={box}>
-                        <Heading as="h3" style={{ ...h3, marginTop: 0 }}>This is Clura.</Heading>
+                        <Heading as="h3" style={{ ...h3, marginTop: 0 }}>I built Clura.</Heading>
                         <Text style={{ ...text, padding: 0, marginBottom: '12px' }}>
-                            Unlike generic acrylic boxes, Clura is an engineered system involving:
+                            The best completely open-source enclosure ecosystem featuring:
                         </Text>
                         <ul style={{ paddingLeft: '20px', margin: 0 }}>
                             <li style={listItem}>
-                                <strong>Active Filtration:</strong> Not just a fan, but a scrubbing loop designed to actually trap harmful particles.
+                                <strong>Active Air Filtration:</strong> Real HEPA/Carbon scrubbing to remove VOCs.
                             </li>
                             <li style={listItem}>
-                                <strong>Filament Intelligence:</strong> A built-in load cell system that tracks filament weight so you never run out of filament mid print.
+                                <strong>Filament Weight Sensing:</strong> Know exactly how much material you have left.
                             </li>
                             <li style={listItem}>
-                                <strong>Smart Sensing:</strong> Integrated environmental sensors (VOC, PM2.5, Temp) running on custom open firmware.
+                                <strong>Smart Ecosystem:</strong> A touch screen + sensors to monitor your print environment.
                             </li>
                         </ul>
                     </Section>
 
                     <Text style={text}>
-                        Here is the deal: I don't care if you choose to self-source the components following our Bill of Materials, or if you buy our kit to support us.
-                        <br /><br />
-                        All I care is that I have helped another maker with something that I care deeply about.
+                        I started this project because I wanted to print in my room without destroying my lungs (3D Printing releases VOCs and particulates in the air). I wanted an affordable, feature-packed enclosure that could be adapted to any printer. None existed, so I made my own.
+                    </Text>
+
+                    <Text style={text}>
+                        I thought that you might want to check out our <Link href="https://github.com/Cluradev/CluraEnclosure" style={link}>GitHub repo</Link> which contains everything we have ever made and our documentation page.
                     </Text>
 
                     <Section style={{ padding: "16px 0 16px", textAlign: "center" as const }}>
                         <Button href={KICKSTARTER_URL} style={buttonKickstarter}>
-                            Follow the Project
+                            Get the Kit on Kickstarter
                         </Button>
                         <Text style={{ ...caption, marginTop: "12px" }}>
                             Or <Link style={link} href="https://github.com/Cluradev/CluraEnclosure">view on GitHub</Link>
@@ -90,7 +92,7 @@ export const InstagramEmailC = ({ name }: EmailProps) => {
                     <Hr style={hr} />
 
                     <Text style={text}>
-                        I hope this helps your setup.
+                        Best,
                         <br />
                         Fabrizio
                     </Text>
@@ -107,7 +109,7 @@ export const InstagramEmailC = ({ name }: EmailProps) => {
     );
 };
 
-export default InstagramEmailC;
+export default SuperbackerEmailD;
 
 // STYLES (Brand)
 const main: React.CSSProperties = {

@@ -20,7 +20,7 @@ interface EmailProps {
     name?: string;
 }
 
-export const InstagramEmailC = ({ name }: EmailProps) => {
+export const SuperbackerEmailE = ({ name }: EmailProps) => {
     return (
         <Html>
             <Head />
@@ -107,7 +107,7 @@ export const InstagramEmailC = ({ name }: EmailProps) => {
     );
 };
 
-export default InstagramEmailC;
+export default SuperbackerEmailE;
 
 // STYLES (Brand)
 const main: React.CSSProperties = {
