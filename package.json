@@ -10,6 +10,7 @@
         "test": "jest",
         "send-batch": "tsx src/scripts/send-batch.ts",
         "metrics": "tsx src/scripts/metrics.ts",
+        "analyze": "tsx src/scripts/analyze-results.ts",
         "email": "email dev -d src/templates"
     },
     "keywords": [
